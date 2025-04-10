@@ -28,6 +28,10 @@ jobs:
         path: playwright-report/
         retention-days: 30
 
+
+    - name: Install Allure CLI
+      run: npm install -g allure-commandline
+
     - name: Copy History
       if: always()
       run: git clone https://${{ secrets.API_TOKEN_GITHUB }}:x-oauth-basic@github.com/alexandermoroz01/hora-allure.git
