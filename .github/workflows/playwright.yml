@@ -19,10 +19,35 @@ jobs:
       run: npx playwright install --with-deps
 
     - name: Run Playwright tests
-      run: npx playwright test --project=chromium
+      run: npx playwright test
+
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
+
+    - name: Run Allure Report
+      run: allure serve allure-results
+      
+    - name: Copy History
+      if: always()
+      run: git clone https://${{ secrets.API_TOKEN_GITHUB }}:x-oauth-basic@github.com/alexandermoroz01/hora-allure.git
+
+    - name: Create Report with History
+      if: always()
+      run: cp -r $(pwd)/hora-allure/template-playwright-npm-fixtures/history $(pwd)/allure-results/ || true && npm run allure:generate
+
+    - name: Pushes to another repository allure-report
+      if: always()
+      uses: cpina/github-action-push-to-another-repository@main
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+      with:
+        source-directory: "./allure-report"
+        destination-github-username: "alexandermoroz01"
+        destination-repository-name: "hora-allure"
+        user-email: alexandermoroz01@gmail.com
+        target-directory: "./template-playwright-npm-fixtures/"
+        target-branch: main
