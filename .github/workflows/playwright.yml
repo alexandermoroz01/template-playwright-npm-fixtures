@@ -27,7 +27,11 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
-      
+
+
+    - name: Generate Allure report
+      run: allure generate allure-results --clean
+
     - name: Copy History
       if: always()
       run: git clone https://${{ secrets.API_TOKEN_GITHUB }}:x-oauth-basic@github.com/alexandermoroz01/hora-allure.git
