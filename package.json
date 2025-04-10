@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:UI": "npx playwright test --ui"
+    "test:UI": "npx playwright test --ui",
+    "allure:generate": "allure generate allure-results --clean"
   },
   "repository": {
     "type": "git",
