@@ -27,9 +27,6 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
-
-    - name: Run Allure Report
-      run: allure serve allure-results
       
     - name: Copy History
       if: always()
