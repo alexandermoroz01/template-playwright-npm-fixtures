@@ -1,0 +1,1 @@
+# template-playwright-npm-fixtures
